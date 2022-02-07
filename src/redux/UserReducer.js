@@ -6,7 +6,6 @@ export const userSlice = createSlice({
     f_name: "",
     l_name: "",
     username: "",
-    password: "",
     accessToken: "",
     email: "",
     phone: null,
@@ -37,11 +36,14 @@ export const userSlice = createSlice({
     setSubjects: (state, action) => {
       state.subjects = action.payload;
     },
+    setAccessToken: (state, action) => {
+      state.accessToken = action.payload;
+    },
     setTutor: (state, action) => {
       state.f_name = action.payload;
     },
     loginSuccess: (state, action) => {
-      state.name = action.payload.name;
+      state.f_name = action.payload.name;
       state.address = action.payload.address;
       state.country = action.payload.country;
       state.postal = action.payload.postal;
@@ -61,8 +63,8 @@ export const userSlice = createSlice({
       state.id = action.payload._id;
     },
     logout: (state) => {
-      state.fname = "";
-      state.lname = "";
+      state.f_name = "";
+      state.l_name = "";
       state.address = "";
       state.email = "";
       state.accessToken = "";

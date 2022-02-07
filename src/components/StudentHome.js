@@ -1,3 +1,6 @@
+//NEED TO GET THE STUDENTS' PAPERS
+//CAN SAVE THE PAPER_ID TO THE STATE TO KNOW WHAT PAPER WE ARE DOING
+
 import React, { useState } from "react";
 import StudentNavBar from "./StudentNavBar";
 import {

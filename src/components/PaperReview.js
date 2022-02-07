@@ -1,3 +1,5 @@
+//must retrieve the accuracy of the questions to display the right or wrong
+
 import React from "react";
 import StudentNavBar from "./StudentNavBar";
 import { Grid, Button } from "@mui/material";

@@ -1,3 +1,5 @@
+//NEED TO RETRIEVE THE QUESTIONS TO PRINT AND SAVE THE USER'S ANSWERS
+
 import {
   FormControlLabel,
   Radio,
@@ -26,7 +28,11 @@ const PaperQuestions = () => {
         <ol>
           <li style={{ marginBottom: "10px" }}>
             QUESTION
-            <img src={"https://imgur.com/YIybWQ0"} alt="question 1" />
+            <img
+              src={"https://i.imgur.com/YIybWQ0.png?1"}
+              alt="question 1"
+              style={{ width: "60%" }}
+            />
             <RadioGroup row>
               <FormControlLabel
                 value="A"

@@ -1,8 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, TextField, Container, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../redux/UserReducer";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  // const user = useSelector((state) => state.user);
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (username[0] === "s") {
+      const res = await axios.post("http://127.0.0.1:8000/students/login/", {
+        username: username,
+        password: password,
+      });
+      console.log(res.data);
+      dispatch(userActions.setAccessToken(res.data));
+      console.log(typeof username);
+      //i'm assuming this only happens after the above lines
+      const student = await axios.get(
+        `http://127.0.0.1:8000/students/profile/${username}/`
+      );
+      console.log(student.data);
+    } else if (username[0] === "t") {
+      const res = await axios.post("http://127.0.0.1:8000/tutors/login/", {
+        username: username,
+        password: password,
+      });
+      console.log(res.data);
+      dispatch(userActions.setAccessToken(res.data));
+      const tutor = await axios.get(
+        `http://127.0.0.1:8000/tutors/profile/${username}/`,
+        {
+          username: username,
+        }
+      );
+      console.log(tutor);
+    }
+  };
   return (
     <>
       <header
@@ -29,6 +75,8 @@ const Home = () => {
                   label="Username"
                   name="username"
                   autoComplete="username"
+                  value={username}
+                  onChange={handleUsernameChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -40,10 +88,14 @@ const Home = () => {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={password}
+                  onChange={handlePasswordChange}
                 />
               </Grid>
               <Grid container justifyContent="center" sx={{ margin: "20px" }}>
-                <Button variant="outlined">Log In</Button>
+                <Button variant="outlined" onClick={handleLogin}>
+                  Log In
+                </Button>
               </Grid>
             </Grid>
           </Container>

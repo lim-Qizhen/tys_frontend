@@ -1,3 +1,5 @@
+//JUST RETRIEVE THE PAPER TITLE FROM THE PAPER_ID
+
 import React, { useEffect, useState } from "react";
 import StudentNavBar from "./StudentNavBar";
 import { Button, Box } from "@mui/material";

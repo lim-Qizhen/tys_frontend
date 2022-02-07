@@ -12,8 +12,10 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../redux/UserReducer";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const TutorRegister = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const schools = [
@@ -51,6 +53,7 @@ const TutorRegister = () => {
               const toChange = [...teachingSubjects];
               toChange[element - 1] = e.target.value;
               setTeachingSubjects(toChange);
+              console.log(teachingSubjects);
             }}
           >
             {subjects.map((option) => (
@@ -81,22 +84,37 @@ const TutorRegister = () => {
   const handleSchoolChange = (e) => {
     dispatch(userActions.setSchool(e.target.value));
   };
+  const [password, setPassword] = useState("");
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user.f_name, user.l_name);
-    for (let i = 0; i < teachingSubjects.length; i++) {
-      const res = await axios.post("http://127.0.0.1:8000/tutors/new/", {
-        first_name: user.f_name,
-        last_name: user.l_name,
-        username: user.username,
-        contact: user.phone,
-        email: user.email,
-        school: user.school,
-        subject: teachingSubjects[i],
-        password: "lll",
-      });
-      console.log(res.data);
-    }
+    const res = await axios.post("http://127.0.0.1:8000/tutors/new/", {
+      first_name: user.f_name,
+      last_name: user.l_name,
+      username: `t_${user.username}`,
+      contact: user.phone,
+      email: user.email,
+      school: user.school,
+      subject: teachingSubjects,
+      password: password,
+    });
+    console.log(res.data);
+    history.push("/");
+  };
+  
+  const disableButton = () => {
+    return (
+      user.f_name === "" ||
+      user.l_name === "" ||
+      user.username === "" ||
+      user.phone === "" ||
+      user.email === "" ||
+      user.school === "" ||
+      // teachingSubjects === [""] ||
+      user.password === ""
+    );
   };
   return (
     <>
@@ -165,6 +183,8 @@ const TutorRegister = () => {
               type="password"
               id="password"
               autoComplete="new-password"
+              value={password}
+              onChange={handlePasswordChange}
             />
           </Grid>
           <Grid item xs={12}>
@@ -232,7 +252,11 @@ const TutorRegister = () => {
           </IconButton>
         </Grid>
         <Grid container justifyContent="center" sx={{ marginTop: "20px" }}>
-          <Button variant="outlined" onClick={handleSubmit}>
+          <Button
+            variant="outlined"
+            onClick={handleSubmit}
+            disabled={disableButton}
+          >
             Register
           </Button>
         </Grid>

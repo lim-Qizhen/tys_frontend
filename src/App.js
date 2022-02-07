@@ -21,7 +21,7 @@ function App() {
         <Route exact path="/tutor" component={TutorConsultations} />
         <Route exact path="/tutor/register" component={TutorRegister} />
         <Route exact path="/student/paper" component={PaperStart} />
-        <Route exact path="/student/paper/:id/questions" component={PaperQuestions}
+        <Route exact path="/student/paper/questions" component={PaperQuestions}
         />
         <Route exact path="/student/paper/review" component={PaperReview} />
         <Route

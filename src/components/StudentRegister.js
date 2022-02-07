@@ -6,38 +6,66 @@ import {
   Container,
   IconButton,
   Button,
+  InputAdornment,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../redux/UserReducer";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const StudentRegister = () => {
-  const schools = [{ value: "7101", label: "Anglican High School" }];
-  const subjects = [
-    { value: "B", label: "Biology" },
-    { value: "C", label: "Chemistry" },
-    { value: "P", label: "Physics" },
-    { value: "SB", label: "Science (Biology)" },
-    { value: "SC", label: "Science (Chemistry)" },
-    { value: "SP", label: "Science (Physics)" },
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const schools = [{ value: "Anglican High School", label: "Anglican High School" }];
+  const subjectOptions = [
+    { value: "Biology", label: "Biology" },
+    { value: "Chemistry", label: "Chemistry" },
+    { value: "Physics", label: "Physics" },
+    { value: "Science (Biology)", label: "Science (Biology)" },
+    { value: "Science (Chemistry)", label: "Science (Chemistry)" },
+    { value: "Science (Physics)", label: "Science (Physics)" },
   ];
-  const exams = [
-    { value: "E", label: "Express" },
-    { value: "N", label: "Normal Academic" },
-    { value: "T", label: "Normal Technical" },
+  const examOptions = [
+    { value: "Express", label: "Express" },
+    { value: "Normal (Academic)", label: "Normal Academic" },
+    { value: "Normal (Technical)", label: "Normal Technical" },
   ];
   const [numberOfExams, setNumberOfExams] = useState(1);
-  const handleAddSubject = () => {
+  const [subjects, setSubjects] = useState([""]);
+  const [exams, setExams] = useState([""]);
+  const handleAddExam = () => {
     setNumberOfExams(numberOfExams + 1);
+    const subjectToAdd = [...subjects];
+    const examToAdd = [...exams];
+    subjectToAdd.push("");
+    examToAdd.push("");
+    setSubjects(subjectToAdd);
+    setExams(examToAdd);
   };
-  const examOptions = () => {
+  const allExams = () => {
     let number = [];
     for (let i = 1; i <= numberOfExams; i++) {
       number.push(i);
     }
-    return number.map((value) => (
+    return number.map((element) => (
       <>
         <Grid item xs={6}>
-          <TextField required fullWidth select label="Subject" id="subject">
-            {subjects.map((option) => (
+          <TextField
+            required
+            fullWidth
+            select
+            label="Subject"
+            id="subject"
+            value={subjects[element - 1]}
+            onChange={(e) => {
+              const toChange = [...subjects];
+              toChange[element - 1] = e.target.value;
+              setSubjects(toChange);
+            }}
+          >
+            {subjectOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
               </MenuItem>
@@ -45,8 +73,19 @@ const StudentRegister = () => {
           </TextField>
         </Grid>
         <Grid item xs={6}>
-          <TextField required fullWidth select label="Exam">
-            {exams.map((option) => (
+          <TextField
+            required
+            fullWidth
+            select
+            label="Exam"
+            value={exams[element - 1]}
+            onChange={(e) => {
+              const toChange = [...exams];
+              toChange[element - 1] = e.target.value;
+              setExams(toChange);
+            }}
+          >
+            {examOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
               </MenuItem>
@@ -56,6 +95,59 @@ const StudentRegister = () => {
       </>
     ));
   };
+  const handleFirstNameChange = (e) => {
+    dispatch(userActions.setFirstName(e.target.value));
+  };
+  const handleLastNameChange = (e) => {
+    dispatch(userActions.setLastName(e.target.value));
+  };
+  const handleUsernameChange = (e) => {
+    dispatch(userActions.setUsername(e.target.value));
+  };
+  const handleEmailChange = (e) => {
+    dispatch(userActions.setEmail(e.target.value));
+  };
+  const handlePhoneChange = (e) => {
+    dispatch(userActions.setPhone(e.target.value));
+  };
+  const handleSchoolChange = (e) => {
+    dispatch(userActions.setSchool(e.target.value));
+  };
+  const [password, setPassword] = useState("");
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+  const disableButton = () => {
+    return (
+      user.f_name === "" ||
+      user.l_name === "" ||
+      user.username === "" ||
+      user.phone === "" ||
+      user.email === "" ||
+      user.school === "" ||
+      // user.subjects === [] ||
+      user.password === ""
+    );
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await axios.post("http://127.0.0.1:8000/students/new/", {
+      first_name: user.f_name,
+      last_name: user.l_name,
+      username: `s_${user.username}`,
+      contact: user.phone,
+      email: user.email,
+      school: user.school,
+      subject: subjects,
+      exams: exams,
+      password: password,
+    });
+    console.log(res.data);
+    if(typeof res.data !== "string"){
+      history.push("/");
+    }
+  };
+
   return (
     <>
       <header
@@ -75,12 +167,13 @@ const StudentRegister = () => {
           <Grid item xs={12} sm={8}>
             <TextField
               autoComplete="given-name"
-              name="firstName"
               required
               fullWidth
               id="firstName"
               label="First Name"
               autoFocus
+              value={user.f_name}
+              onChange={handleFirstNameChange}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -91,6 +184,8 @@ const StudentRegister = () => {
               label="Last Name"
               name="lastName"
               autoComplete="family-name"
+              value={user.l_name}
+              onChange={handleLastNameChange}
             />
           </Grid>
           <Grid item xs={12}>
@@ -101,7 +196,13 @@ const StudentRegister = () => {
               label="Username"
               name="username"
               autoComplete="username"
-              value="s_"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">s_</InputAdornment>
+                ),
+              }}
+              value={user.username}
+              onChange={handleUsernameChange}
             />
           </Grid>
           <Grid item xs={12}>
@@ -113,6 +214,8 @@ const StudentRegister = () => {
               type="password"
               id="password"
               autoComplete="new-password"
+              value={password}
+              onChange={handlePasswordChange}
             />
           </Grid>
           <Grid item xs={12}>
@@ -124,6 +227,8 @@ const StudentRegister = () => {
               type="email"
               id="email"
               autoComplete="email"
+              value={user.email}
+              onChange={handleEmailChange}
             />
           </Grid>
           <Grid item xs={3}>
@@ -144,10 +249,20 @@ const StudentRegister = () => {
               type="number"
               id="phone"
               autoComplete="phone"
+              value={user.phone}
+              onChange={handlePhoneChange}
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField required fullWidth select label="School" id="school">
+            <TextField
+              required
+              fullWidth
+              select
+              label="School"
+              id="school"
+              value={user.school}
+              onChange={handleSchoolChange}
+            >
               {schools.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
@@ -155,20 +270,26 @@ const StudentRegister = () => {
               ))}
             </TextField>
           </Grid>
-          {examOptions()}
+          {allExams()}
         </Grid>
         <Grid container justifyContent="flex-end">
           <IconButton
             aria-label="subject"
             size="large"
-            onClick={handleAddSubject}
+            onClick={handleAddExam}
             disabled={numberOfExams >= 3}
           >
             <AddCircleOutlineIcon />
           </IconButton>
         </Grid>
         <Grid container justifyContent="center" sx={{ marginTop: "20px" }}>
-          <Button variant="outlined">Register</Button>
+          <Button
+            variant="outlined"
+            // disabled={disableButton}
+            onClick={handleSubmit}
+          >
+            Register
+          </Button>
         </Grid>
       </Container>
     </>

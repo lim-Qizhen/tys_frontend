@@ -1,3 +1,6 @@
+//log out function remove the accesss token and do the authorisation thing
+//prepare profile page (must retrieve the user profile)
+
 import React from "react";
 import { AppBar, Container, Toolbar, Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
