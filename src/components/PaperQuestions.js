@@ -69,7 +69,7 @@ const PaperQuestions = () => {
       </li>
     );
   });
-
+  console.log(questions);
   const handleSubmit = async (e) => {
     e.preventDefault();
     history.push(`/student/${params.paper}/review`);
@@ -78,13 +78,48 @@ const PaperQuestions = () => {
     questions.map((question) => {
       solutions.push(question.answer);
     });
-    //marking and update database
-    const marking = []
-    for (let i = 0; i< solutions.length; i++){
-      marking.push(solutions[i] === answers[i])
+    //marking
+    const marking = [];
+    for (let i = 0; i < solutions.length; i++) {
+      marking.push(solutions[i] === answers[i]);
     }
-    const accuracy = marking.filter(element => element === true).length/marking.length
-    console.log(accuracy)
+    const accuracy =
+      marking.filter((element) => element === true).length / marking.length;
+    console.log(accuracy);
+    //update review database
+    const updateForReview = async (
+      username,
+      paper_id,
+      question_number,
+      question_img,
+      answer,
+      student_answer,
+      accuracy,
+      solution
+    ) => {
+      await axios.post("http://localhost:8000/students/papers/review/", {
+        username: username,
+        paper_id: paper_id,
+        question_number: question_number,
+        question_img: question_img,
+        answer: answer,
+        student_answer: student_answer,
+        accuracy: accuracy,
+        solution: solution,
+      });
+    };
+    questions.map((question, index) => {
+      updateForReview(
+        user.username,
+        question.paper_id,
+        question.question_number,
+        question.question_img,
+        question.answer,
+        answers[index],
+        marking[index],
+        question.solution
+      );
+    });
     //update the students papers table
     const update = await axios.put(
       `http://127.0.0.1:8000/students/papers/submit/${user.username}/${params.paper}/`,
