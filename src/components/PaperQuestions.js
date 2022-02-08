@@ -9,16 +9,13 @@ import React, { useState, useEffect } from "react";
 import StudentNavBar from "./StudentNavBar";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 const PaperQuestions = () => {
+  const user = useSelector((state) => state.user);
   const params = useParams();
   const history = useHistory();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    history.push(`/student/${params.paper}/review`);
-    //still need to submit for marking into database
-  };
-  console.log(params);
+  
   //get the paper questions ordered by question number
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
@@ -27,13 +24,9 @@ const PaperQuestions = () => {
       setQuestions(res.data);
     });
   }, []);
-  console.log(questions);
+
   //print the questions and save the solutions
   const [answers, setAnswers] = useState([]);
-  const handleChange = (e) => {
-    // setAnswers(e.target.value)
-    console.log(e.target.value);
-  };
   const printQuestions = questions.map((question, index) => {
     return (
       <li style={{ marginBottom: "10px" }}>
@@ -76,7 +69,16 @@ const PaperQuestions = () => {
       </li>
     );
   });
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    history.push(`/student/${params.paper}/review`);
+    //update the students papers table
+    const update = await axios.put(`http://127.0.0.1:8000/students/papers/submit/${user.username}/${params.paper}/`,
+    {
+      results: 0.83
+    })
+    //marking
+  };
   return (
     <>
       <StudentNavBar />

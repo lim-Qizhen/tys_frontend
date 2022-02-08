@@ -94,7 +94,7 @@ const StudentHome = () => {
           {donePapers[subject].map((element) => {
             return (
               <ListItemText sx={{ pl: 4 }}>
-                <Link to={`/student/${element}`}>{element.split("_")[2]}</Link>
+                <Link to={`/student/${element}/review`}>{element.split("_")[2]}</Link>
               </ListItemText>
             );
           })}
