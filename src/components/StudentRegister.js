@@ -18,19 +18,21 @@ const StudentRegister = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const schools = [{ value: "Anglican High School", label: "Anglican High School" }];
+  const schools = [
+    { value: "Anglican_High_School", label: "Anglican High School" },
+  ];
   const subjectOptions = [
     { value: "Biology", label: "Biology" },
     { value: "Chemistry", label: "Chemistry" },
     { value: "Physics", label: "Physics" },
-    { value: "Science (Biology)", label: "Science (Biology)" },
-    { value: "Science (Chemistry)", label: "Science (Chemistry)" },
-    { value: "Science (Physics)", label: "Science (Physics)" },
+    { value: "Science_(Biology)", label: "Science (Biology)" },
+    { value: "Science_(Chemistry)", label: "Science (Chemistry)" },
+    { value: "Science_(Physics)", label: "Science (Physics)" },
   ];
   const examOptions = [
     { value: "Express", label: "Express" },
-    { value: "Normal (Academic)", label: "Normal Academic" },
-    { value: "Normal (Technical)", label: "Normal Technical" },
+    { value: "Normal_(Academic)", label: "Normal Academic" },
+    { value: "Normal_(Technical)", label: "Normal Technical" },
   ];
   const [numberOfExams, setNumberOfExams] = useState(1);
   const [subjects, setSubjects] = useState([""]);
@@ -131,6 +133,7 @@ const StudentRegister = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //create account
     const res = await axios.post("http://127.0.0.1:8000/students/new/", {
       first_name: user.f_name,
       last_name: user.l_name,
@@ -143,9 +146,20 @@ const StudentRegister = () => {
       password: password,
     });
     console.log(res.data);
-    if(typeof res.data !== "string"){
-      history.push("/");
-    }
+    //generating relevant papers for student
+    const papers = await axios.get(
+      `http://127.0.0.1:8000/students/papers/${subjects}/${exams}/`
+    );
+    console.log(papers.data);
+    const studentPapers = []
+    papers.data.map((paper)=>{
+      studentPapers.push(paper.paper_id)
+    })
+    console.log(studentPapers)
+    dispatch(userActions.setPapers(studentPapers))
+    // if(typeof res.data !== "string"){
+    //   history.push("/");
+    // }
   };
 
   return (

@@ -12,6 +12,7 @@ export const userSlice = createSlice({
     school: "",
     subjects: [],
     exams: [],
+    papers: [],
     is_tutor: false,
   },
   reducers: {
@@ -38,6 +39,9 @@ export const userSlice = createSlice({
     },
     setAccessToken: (state, action) => {
       state.accessToken = action.payload;
+    },
+    setPapers: (state, action) => {
+      state.papers = action.payload;
     },
     setTutor: (state, action) => {
       state.f_name = action.payload;

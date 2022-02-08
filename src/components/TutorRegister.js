@@ -19,7 +19,7 @@ const TutorRegister = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const schools = [
-    { value: "Anglican High School", label: "Anglican High School" },
+    { value: "Anglican_High_School", label: "Anglican High School" },
   ];
   const subjects = [
     { value: "Biology", label: "Biology" },
