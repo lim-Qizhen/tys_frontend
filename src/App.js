@@ -10,6 +10,7 @@ import StudentHome from "./components/StudentHome";
 import StudentRegister from "./components/StudentRegister";
 import TutorConsultations from "./components/TutorConsultations";
 import TutorRegister from "./components/TutorRegister";
+import StudentProfile from "./components/StudentProfile";
 
 function App() {
   return (
@@ -21,17 +22,19 @@ function App() {
         <Route exact path="/tutor" component={TutorConsultations} />
         <Route exact path="/tutor/register" component={TutorRegister} />
         <Route exact path="/student/:paper" component={PaperStart} />
-        {/* <Route path="/page-one/:item" component = {PaperQuestions} /> */}
-        <Route exact path="/student/:paper/questions" component={PaperQuestions}
+        <Route
+          exact
+          path="/student/:paper/questions"
+          component={PaperQuestions}
         />
-        <Route exact path="/student/paper/review" component={PaperReview} />
+        <Route exact path="/student/:paper/review" component={PaperReview} />
         <Route
           exact
           path="/student/consultations"
           component={StudentConsultations}
         />
         <Route exact path="/student/booking" component={Booking} />
-        {/* <Route exact path="/student/profile" component={StudentProfile} /> */}
+        <Route exact path="/student/profile" component={StudentProfile} />
       </BrowserRouter>
     </div>
   );

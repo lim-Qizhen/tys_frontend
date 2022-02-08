@@ -4,11 +4,12 @@ import React, { useEffect, useState } from "react";
 import StudentNavBar from "./StudentNavBar";
 import { Button, Box } from "@mui/material";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 const PaperStart = () => {
   const [paper, setPaper] = useState({});
-  const params = useParams();console.log(params)
+  const params = useParams();
+  const history = useHistory()
 
   // useEffect(() => {
   //   const getPaper = async () => {
@@ -18,6 +19,11 @@ const PaperStart = () => {
   //   };
   //   getPaper();
   // }, []);
+
+  const handleStart = (e) => {
+    e.preventDefault();
+    history.push(`/student/${params.paper}/questions`)
+  };
 
   return (
     <>
@@ -30,10 +36,11 @@ const PaperStart = () => {
           fontWeight: "bold",
         }}
       >
-        {params.paper.split("_")[0]} {params.paper.split("_")[1]} {params.paper.split("_")[2]}
+        {params.paper.split("_")[0]} {params.paper.split("_")[1]}{" "}
+        {params.paper.split("_")[2]}
       </div>
       <Box textAlign="center">
-        <Button variant="outlined" color="inherit">
+        <Button variant="outlined" color="inherit" onClick={handleStart}>
           START
         </Button>
       </Box>

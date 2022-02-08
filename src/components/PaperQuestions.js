@@ -1,5 +1,3 @@
-//NEED TO RETRIEVE THE QUESTIONS TO PRINT AND SAVE THE USER'S ANSWERS
-
 import {
   FormControlLabel,
   Radio,
@@ -9,8 +7,16 @@ import {
 } from "@mui/material";
 import React from "react";
 import StudentNavBar from "./StudentNavBar";
+import { useParams, useHistory } from "react-router-dom";
 
 const PaperQuestions = () => {
+  const params = useParams();
+  const history = useHistory()
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    history.push(`/student/${params.paper}/review`)
+  }
+  //get the paper questions
   return (
     <>
       <StudentNavBar />
@@ -22,7 +28,7 @@ const PaperQuestions = () => {
           display: "sticky",
         }}
       >
-        2017 O Levels Science (Physics)
+        {params.paper.split("_")[0]} {params.paper.split("_")[1]} {params.paper.split("_")[2]}
       </div>
       <div className="questions">
         <ol>
@@ -85,7 +91,9 @@ const PaperQuestions = () => {
         </ol>
       </div>
       <Grid container justifyContent="center">
-        <Button variant="outlined">Submit</Button>
+        <Button variant="outlined" color="inherit" onClick = {handleSubmit}>
+          Submit
+        </Button>
       </Grid>
     </>
   );
