@@ -55,6 +55,7 @@ export const userSlice = createSlice({
       state.school = action.payload.school;
       state.subjects = action.payload.subject;
       state.exams = action.payload.exams;
+      state.username = action.payload.username;
       //state is like the actual thing, action.payload is like what you put in
     },
     // registerSuccess: (state, action) => {

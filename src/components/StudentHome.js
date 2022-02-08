@@ -1,7 +1,7 @@
 //NEED TO GET THE STUDENTS' PAPERS
 //CAN SAVE THE PAPER_ID TO THE STATE TO KNOW WHAT PAPER WE ARE DOING
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StudentNavBar from "./StudentNavBar";
 import {
   Box,
@@ -13,12 +13,42 @@ import {
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { useSlider } from "@mui/base";
+import axios from "axios";
 
 const StudentHome = () => {
   const user = useSelector((state) => state.user);
+  const [relevantPapers, setRelevantPapers] = useState([]);
+  useEffect(() => {
+    axios.get(`http://127.0.0.1:8000/students/login_papers/${user.username}/`)
+    .then(res => {
+      setRelevantPapers(res.data)
+    })
+  },[])
+  console.log(relevantPapers)
+  const donePapers = {}
+  const toDoPapers = {}
+  for (const paper of relevantPapers){
+    if(paper.completed === true){
+      const subject = paper.paper_id.split("_")[1]
+      if (subject in donePapers){
+        donePapers[subject].push(paper.paper_id.split("_")[2])
+      } 
+      else{
+        donePapers[subject] = [paper.paper_id.split("_")[2]]  
+      }
+    }
+    else{
+      const subject = paper.paper_id.split("_")[1]
+      if (subject in toDoPapers){
+        toDoPapers[subject].push(paper.paper_id.split("_")[2])
+      } 
+      else{
+        toDoPapers[subject] = [paper.paper_id.split("_")[2]]  
+      }
+    }
+  }
+  console.log(donePapers, toDoPapers)
 
-  //get all relevant papers
-  const relevantPapers = [];
   //create array of states depending on number of subjects x2
   const [open, setOpen] = useState([false]);
   const handleClick = (sequence) => {
@@ -50,13 +80,13 @@ const StudentHome = () => {
       <>
         <ListItemButton
           onClick={() => {
-            handleClick(index+user.subjects.length);
+            handleClick(index + user.subjects.length);
           }}
         >
           <ListItemText primary={subject} />
-          {open[index+user.subjects.length] ? <ExpandLess /> : <ExpandMore />}
+          {open[index + user.subjects.length] ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={open[index+user.subjects.length]}>
+        <Collapse in={open[index + user.subjects.length]}>
           <ListItemText sx={{ pl: 4 }}>2017</ListItemText>
           <ListItemText sx={{ pl: 4 }}>2016</ListItemText>
         </Collapse>
