@@ -20,57 +20,54 @@ const PaperQuestions = () => {
   };
   console.log(params);
   //get the paper questions ordered by question number
-  const [questions, setQuestions] = useState([])
+  const [questions, setQuestions] = useState([]);
   useEffect(() => {
     axios.get(`http://127.0.0.1:8000/papers/${params.paper}/`).then((res) => {
-      console.log(res.data)
-      setQuestions(res.data)
+      console.log(res.data);
+      setQuestions(res.data);
     });
   }, []);
-  console.log(questions)
+  console.log(questions);
   //print the questions and save the solutions
   const [answers, setAnswers] = useState([]);
   const handleChange = (e) => {
     // setAnswers(e.target.value)
     console.log(e.target.value);
   };
-  const printQuestions = () => {
-    questions.map((question) => {
-      console.log(question)
-      return(
-        <li style={{ marginBottom: "10px" }}>
-            QUESTION
-            <img
-              src={"https://i.imgur.com/YIybWQ0.png?1"}
-              alt="question 1"
-              style={{ width: "60%" }}
-            />
-            <RadioGroup row onChange={handleChange}>
-              <FormControlLabel
-                value="A"
-                control={<Radio size="small" />}
-                label="A"
-              />
-              <FormControlLabel
-                value="B"
-                control={<Radio size="small" />}
-                label="B"
-              />
-              <FormControlLabel
-                value="C"
-                control={<Radio size="small" />}
-                label="C"
-              />
-              <FormControlLabel
-                value="D"
-                control={<Radio size="small" />}
-                label="D"
-              />
-            </RadioGroup>
-          </li>
-      )
-    })
-  }
+  const printQuestions = questions.map((question, index) => {
+    return (
+      <li style={{ marginBottom: "10px" }}>
+        <img
+          src={`${question.question_img}`}
+          alt={`question ${index + 1}`}
+          style={{ width: "60%" }}
+        />
+        <RadioGroup row onChange={handleChange}>
+          <FormControlLabel
+            value="A"
+            control={<Radio size="small" />}
+            label="A"
+          />
+          <FormControlLabel
+            value="B"
+            control={<Radio size="small" />}
+            label="B"
+          />
+          <FormControlLabel
+            value="C"
+            control={<Radio size="small" />}
+            label="C"
+          />
+          <FormControlLabel
+            value="D"
+            control={<Radio size="small" />}
+            label="D"
+          />
+        </RadioGroup>
+      </li>
+    );
+  });
+
   return (
     <>
       <StudentNavBar />
@@ -87,65 +84,7 @@ const PaperQuestions = () => {
       </div>
 
       <div className="questions">
-        <ol>
-          {printQuestions()}
-          {/* <li style={{ marginBottom: "10px" }}>
-            QUESTION
-            <img
-              src={"https://i.imgur.com/YIybWQ0.png?1"}
-              alt="question 1"
-              style={{ width: "60%" }}
-            />
-            <RadioGroup row onChange={handleChange}>
-              <FormControlLabel
-                value="A"
-                control={<Radio size="small" />}
-                label="A"
-              />
-              <FormControlLabel
-                value="B"
-                control={<Radio size="small" />}
-                label="B"
-              />
-              <FormControlLabel
-                value="C"
-                control={<Radio size="small" />}
-                label="C"
-              />
-              <FormControlLabel
-                value="D"
-                control={<Radio size="small" />}
-                label="D"
-              />
-            </RadioGroup>
-          </li> */}
-          {/* <li>
-            QUESTION
-            <img src={"https://imgur.com/YIybWQ0"} alt="question 2" />
-            <RadioGroup row>
-              <FormControlLabel
-                value="A"
-                control={<Radio size="small" />}
-                label="A"
-              />
-              <FormControlLabel
-                value="B"
-                control={<Radio size="small" />}
-                label="B"
-              />
-              <FormControlLabel
-                value="C"
-                control={<Radio size="small" />}
-                label="C"
-              />
-              <FormControlLabel
-                value="D"
-                control={<Radio size="small" />}
-                label="D"
-              />
-            </RadioGroup>
-          </li> */}
-        </ol>
+        <ol>{printQuestions}</ol>
       </div>
       <Grid container justifyContent="center">
         <Button variant="outlined" color="inherit" onClick={handleSubmit}>
