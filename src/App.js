@@ -20,8 +20,9 @@ function App() {
         <Route exact path="/student/register" component={StudentRegister} />
         <Route exact path="/tutor" component={TutorConsultations} />
         <Route exact path="/tutor/register" component={TutorRegister} />
-        <Route exact path="/student/paper" component={PaperStart} />
-        <Route exact path="/student/paper/questions" component={PaperQuestions}
+        <Route exact path="/student/:paper" component={PaperStart} />
+        {/* <Route path="/page-one/:item" component = {PaperQuestions} /> */}
+        <Route exact path="/student/:paper/questions" component={PaperQuestions}
         />
         <Route exact path="/student/paper/review" component={PaperReview} />
         <Route

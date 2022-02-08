@@ -14,6 +14,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { useSlider } from "@mui/base";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const StudentHome = () => {
   const user = useSelector((state) => state.user);
@@ -32,16 +33,16 @@ const StudentHome = () => {
     if (paper.completed === true) {
       const subject = paper.paper_id.split("_")[1];
       if (subject in donePapers) {
-        donePapers[subject].push(paper.paper_id.split("_")[2]);
+        donePapers[subject].push(paper.paper_id);
       } else {
-        donePapers[subject] = [paper.paper_id.split("_")[2]];
+        donePapers[subject] = [paper.paper_id];
       }
     } else {
       const subject = paper.paper_id.split("_")[1];
       if (subject in toDoPapers) {
-        toDoPapers[subject].push(paper.paper_id.split("_")[2]);
+        toDoPapers[subject].push(paper.paper_id);
       } else {
-        toDoPapers[subject] = [paper.paper_id.split("_")[2]];
+        toDoPapers[subject] = [paper.paper_id];
       }
     }
   }
@@ -68,7 +69,11 @@ const StudentHome = () => {
         </ListItemButton>
         <Collapse in={open[index]}>
           {toDoPapers[subject].map((element) => {
-            return <ListItemText sx={{ pl: 4 }}>{element}</ListItemText>;
+            return (
+              <ListItemText sx={{ pl: 4 }}>
+                <Link to={`/student/${element}`}>{element.split("_")[2]}</Link>
+              </ListItemText>
+            );
           })}
         </Collapse>
       </>
@@ -87,7 +92,11 @@ const StudentHome = () => {
         </ListItemButton>
         <Collapse in={open[index + user.subjects.length]}>
           {donePapers[subject].map((element) => {
-            return <ListItemText sx={{ pl: 4 }}>{element}</ListItemText>;
+            return (
+              <ListItemText sx={{ pl: 4 }}>
+                <Link to={`/student/${element}`}>{element.split("_")[2]}</Link>
+              </ListItemText>
+            );
           })}
         </Collapse>
       </>
