@@ -100,7 +100,7 @@ const Home = () => {
                 />
               </Grid>
               <Grid container justifyContent="center" sx={{ margin: "20px" }}>
-                <Button variant="outlined" onClick={handleLogin}>
+                <Button variant="outlined" color="inherit" onClick={handleLogin}>
                   Log In
                 </Button>
               </Grid>
