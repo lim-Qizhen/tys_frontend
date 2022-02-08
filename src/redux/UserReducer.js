@@ -12,7 +12,7 @@ export const userSlice = createSlice({
     school: "",
     subjects: [],
     exams: [],
-    papers: [],
+    papers: "",
     is_tutor: false,
   },
   reducers: {
@@ -47,14 +47,14 @@ export const userSlice = createSlice({
       state.f_name = action.payload;
     },
     loginSuccess: (state, action) => {
-      state.f_name = action.payload.name;
-      state.address = action.payload.address;
-      state.country = action.payload.country;
-      state.postal = action.payload.postal;
+      state.f_name = action.payload.first_name;
+      state.l_name = action.payload.last_name;
       state.email = action.payload.email;
       state.accessToken = action.payload.accessToken;
       state.phone = action.payload.phone;
-      state.id = action.payload._id;
+      state.school = action.payload.school;
+      state.subjects = action.payload.subject;
+      state.exams = actiona.payload.exams;
       //state is like the actual thing, action.payload is like what you put in
     },
     registerSuccess: (state, action) => {

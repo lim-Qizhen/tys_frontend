@@ -157,9 +157,9 @@ const StudentRegister = () => {
     })
     console.log(studentPapers)
     dispatch(userActions.setPapers(studentPapers))
-    // if(typeof res.data !== "string"){
-    //   history.push("/");
-    // }
+    if(typeof res.data !== "string"){
+      history.push("/");
+    }
   };
 
   return (

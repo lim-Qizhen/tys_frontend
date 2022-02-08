@@ -11,8 +11,10 @@ import {
   Collapse,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
 
 const StudentHome = () => {
+  const user = useSelector((state) => state.user);
   //create array of states depending on number of subjects
   const [open, setOpen] = useState([false, false]);
   const handleClick = (sequence) => {
@@ -25,7 +27,7 @@ const StudentHome = () => {
   return (
     <div>
       <StudentNavBar />
-      <p>Welcome, user</p>
+      <p>Welcome, {user.f_name}</p>
       <div
         className="all-papers"
         style={{

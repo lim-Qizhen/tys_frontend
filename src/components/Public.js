@@ -34,6 +34,7 @@ const Home = () => {
         `http://127.0.0.1:8000/students/profile/${username}/`
       );
       console.log(student.data);
+      dispatch(userActions.loginSuccess(student.data))
       history.push("/student");
     } else if (username[0] === "t") {
       const res = await axios.post("http://127.0.0.1:8000/tutors/login/", {
