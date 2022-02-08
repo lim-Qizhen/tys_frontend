@@ -42,7 +42,16 @@ const PaperQuestions = () => {
           alt={`question ${index + 1}`}
           style={{ width: "60%" }}
         />
-        <RadioGroup row onChange={handleChange}>
+        <RadioGroup
+          row
+          onChange={(e) => {
+            e.preventDefault();
+            const currentAnswers = [...answers]
+            currentAnswers[index] = e.target.value
+            setAnswers(currentAnswers)
+            console.log(answers)
+          }}
+        >
           <FormControlLabel
             value="A"
             control={<Radio size="small" />}
