@@ -147,17 +147,32 @@ const StudentRegister = () => {
     });
     console.log(res.data);
     //generating relevant papers for student
-    const papers = await axios.get(
-      `http://127.0.0.1:8000/students/papers/${subjects}/${exams}/`
-    );
-    console.log(papers.data);
-    const studentPapers = []
-    papers.data.map((paper)=>{
-      studentPapers.push(paper.paper_id)
-    })
-    console.log(studentPapers)
-    dispatch(userActions.setPapers(studentPapers))
-    if(typeof res.data !== "string"){
+    const papers = [];
+    for (let i = 0; i < subjects.length; i++) {
+      const paper = await axios.get(
+        `http://127.0.0.1:8000/students/papers/${subjects[i]}/${exams[i]}/`
+      );
+      for (const element of paper.data) {
+        papers.push(element);
+      }
+    }
+    console.log(papers);
+    const studentPapers = [];
+    papers.map((paper) => {
+      studentPapers.push(paper.paper_id);
+    });
+    console.log(studentPapers);
+    //save exam papers into database
+    for (const paper of studentPapers) {
+      const savePapers = await axios.post(
+        "http://127.0.0.1:8000/students/papers/",
+        {
+          username: `s_${user.username}`,
+          paper_id: paper,
+        }
+      );
+    }
+    if (typeof res.data !== "string") {
       history.push("/");
     }
   };

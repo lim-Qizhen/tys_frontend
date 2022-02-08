@@ -12,7 +12,7 @@ export const userSlice = createSlice({
     school: "",
     subjects: [],
     exams: [],
-    papers: "",
+    paper: "",
     is_tutor: false,
   },
   reducers: {
@@ -41,7 +41,7 @@ export const userSlice = createSlice({
       state.accessToken = action.payload;
     },
     setPapers: (state, action) => {
-      state.papers = action.payload;
+      state.paper = action.payload;
     },
     setTutor: (state, action) => {
       state.f_name = action.payload;
@@ -54,29 +54,28 @@ export const userSlice = createSlice({
       state.phone = action.payload.phone;
       state.school = action.payload.school;
       state.subjects = action.payload.subject;
-      state.exams = actiona.payload.exams;
+      state.exams = action.payload.exams;
       //state is like the actual thing, action.payload is like what you put in
     },
-    registerSuccess: (state, action) => {
-      state.name = action.payload.name;
-      state.address = action.payload.address;
-      state.country = action.payload.country;
-      state.postal = action.payload.postal;
-      state.email = action.payload.email;
-      state.phone = action.payload.phone;
-      state.id = action.payload._id;
-    },
+    // registerSuccess: (state, action) => {
+    //   state.name = action.payload.name;
+    //   state.address = action.payload.address;
+    //   state.country = action.payload.country;
+    //   state.postal = action.payload.postal;
+    //   state.email = action.payload.email;
+    //   state.phone = action.payload.phone;
+    //   state.id = action.payload._id;
+    // },
     logout: (state) => {
       state.f_name = "";
       state.l_name = "";
-      state.address = "";
       state.email = "";
       state.accessToken = "";
-      state.country = "";
-      state.postal = "";
-      state.countryCode = "";
-      state.phone = null;
-      state.password = "";
+      state.phone = "";
+      state.school = "";
+      state.subjects = "";
+      state.exams = "";
+      state.paper = "";
     },
   },
 });
