@@ -1,3 +1,6 @@
+//add user to database
+//add user relevant papers to database
+
 import React, { useState } from "react";
 import {
   Grid,

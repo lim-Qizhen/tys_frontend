@@ -12,16 +12,56 @@ import {
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
+import { useSlider } from "@mui/base";
 
 const StudentHome = () => {
   const user = useSelector((state) => state.user);
-  //create array of states depending on number of subjects
-  const [open, setOpen] = useState([false, false]);
+
+  //get all relevant papers
+  const relevantPapers = [];
+  //create array of states depending on number of subjects x2
+  const [open, setOpen] = useState([false]);
   const handleClick = (sequence) => {
     const initial = open[sequence];
     const updated = [...open];
     updated[sequence] = !initial;
     setOpen([...updated]);
+  };
+  const examPapers = () => {
+    return user.subjects.map((subject, index) => (
+      <>
+        <ListItemButton
+          onClick={() => {
+            handleClick(index);
+          }}
+        >
+          <ListItemText primary={subject} />
+          {open[index] ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open[index]}>
+          <ListItemText sx={{ pl: 4 }}>2017</ListItemText>
+          <ListItemText sx={{ pl: 4 }}>2016</ListItemText>
+        </Collapse>
+      </>
+    ));
+  };
+  const completedPapers = () => {
+    return user.subjects.map((subject, index) => (
+      <>
+        <ListItemButton
+          onClick={() => {
+            handleClick(index+user.subjects.length);
+          }}
+        >
+          <ListItemText primary={subject} />
+          {open[index+user.subjects.length] ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open[index+user.subjects.length]}>
+          <ListItemText sx={{ pl: 4 }}>2017</ListItemText>
+          <ListItemText sx={{ pl: 4 }}>2016</ListItemText>
+        </Collapse>
+      </>
+    ));
   };
 
   return (
@@ -44,19 +84,10 @@ const StudentHome = () => {
             margin: "20px",
           }}
         >
-          <ListSubheader sx={{backgroundColor:"black", color:"white"}}>Completed Papers</ListSubheader>
-          <ListItemButton
-            onClick={() => {
-              handleClick(0);
-            }}
-          >
-            <ListItemText primary="Physics" />
-            {open[0] ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <Collapse in={open[0]}>
-            <ListItemText sx={{ pl: 4 }}>2017</ListItemText>
-            <ListItemText sx={{ pl: 4 }}>2016</ListItemText>
-          </Collapse>
+          <ListSubheader sx={{ backgroundColor: "black", color: "white" }}>
+            Practice Papers
+          </ListSubheader>
+          {examPapers()}
         </Box>
         <Box
           sx={{
@@ -67,19 +98,10 @@ const StudentHome = () => {
             margin: "20px",
           }}
         >
-          <ListSubheader sx={{backgroundColor:"black", color:"white"}}>Practice Papers</ListSubheader>
-          <ListItemButton
-            onClick={() => {
-              handleClick(1);
-            }}
-          >
-            <ListItemText primary="Physics" />
-            {open[1] ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <Collapse in={open[1]}>
-            <ListItemText sx={{ pl: 4 }}>2017</ListItemText>
-            <ListItemText sx={{ pl: 4 }}>2016</ListItemText>
-          </Collapse>
+          <ListSubheader sx={{ backgroundColor: "black", color: "white" }}>
+            Completed Papers
+          </ListSubheader>
+          {completedPapers()}
         </Box>
       </div>
     </div>

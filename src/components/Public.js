@@ -1,3 +1,7 @@
+//authenticate log in
+//retrieve student profile from database
+//set user state from student profile
+
 import React, { useState } from "react";
 import { Grid, TextField, Container, Button } from "@mui/material";
 import { Link, useHistory } from "react-router-dom";
