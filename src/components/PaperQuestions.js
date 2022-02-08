@@ -5,18 +5,32 @@ import {
   Button,
   Grid,
 } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import StudentNavBar from "./StudentNavBar";
 import { useParams, useHistory } from "react-router-dom";
+import axios from "axios";
 
 const PaperQuestions = () => {
   const params = useParams();
-  const history = useHistory()
+  const history = useHistory();
   const handleSubmit = (e) => {
-    e.preventDefault()
-    history.push(`/student/${params.paper}/review`)
-  }
-  //get the paper questions
+    e.preventDefault();
+    history.push(`/student/${params.paper}/review`);
+    //still need to submit for marking into database
+  };
+  console.log(params);
+  //get the paper questions ordered by question number
+  useEffect(() => {
+    axios.get(`http://127.0.0.1:8000/papers/${params.paper}/`).then((res) => {
+      console.log(res.data)
+    });
+  }, []);
+  //saving the solutions
+  const [answers, setAnswers] = useState([]);
+  const handleChange = (e) => {
+    // setAnswers(e.target.value)
+    console.log(e.target.value);
+  };
   return (
     <>
       <StudentNavBar />
@@ -28,8 +42,10 @@ const PaperQuestions = () => {
           display: "sticky",
         }}
       >
-        {params.paper.split("_")[0]} {params.paper.split("_")[1]} {params.paper.split("_")[2]}
+        {params.paper.split("_")[0]} {params.paper.split("_")[1]}{" "}
+        {params.paper.split("_")[2]}
       </div>
+
       <div className="questions">
         <ol>
           <li style={{ marginBottom: "10px" }}>
@@ -39,7 +55,7 @@ const PaperQuestions = () => {
               alt="question 1"
               style={{ width: "60%" }}
             />
-            <RadioGroup row>
+            <RadioGroup row onChange={handleChange}>
               <FormControlLabel
                 value="A"
                 control={<Radio size="small" />}
@@ -91,7 +107,7 @@ const PaperQuestions = () => {
         </ol>
       </div>
       <Grid container justifyContent="center">
-        <Button variant="outlined" color="inherit" onClick = {handleSubmit}>
+        <Button variant="outlined" color="inherit" onClick={handleSubmit}>
           Submit
         </Button>
       </Grid>
