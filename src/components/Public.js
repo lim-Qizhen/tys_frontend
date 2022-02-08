@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Grid, TextField, Container, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../redux/UserReducer";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   // const user = useSelector((state) => state.user);
 
   const [username, setUsername] = useState("");
@@ -33,6 +34,7 @@ const Home = () => {
         `http://127.0.0.1:8000/students/profile/${username}/`
       );
       console.log(student.data);
+      history.push("/student");
     } else if (username[0] === "t") {
       const res = await axios.post("http://127.0.0.1:8000/tutors/login/", {
         username: username,
