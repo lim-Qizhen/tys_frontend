@@ -83,12 +83,13 @@ const PaperQuestions = () => {
     for (let i = 0; i< solutions.length; i++){
       marking.push(solutions[i] === answers[i])
     }
-    console.log(marking)
+    const accuracy = marking.filter(element => element === true).length/marking.length
+    console.log(accuracy)
     //update the students papers table
     const update = await axios.put(
       `http://127.0.0.1:8000/students/papers/submit/${user.username}/${params.paper}/`,
       {
-        results: 0.83,
+        results: accuracy,
       }
     );
   };
