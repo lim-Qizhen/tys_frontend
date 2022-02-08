@@ -15,7 +15,7 @@ const PaperQuestions = () => {
   const user = useSelector((state) => state.user);
   const params = useParams();
   const history = useHistory();
-  
+
   //get the paper questions ordered by question number
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
@@ -39,10 +39,10 @@ const PaperQuestions = () => {
           row
           onChange={(e) => {
             e.preventDefault();
-            const currentAnswers = [...answers]
-            currentAnswers[index] = e.target.value
-            setAnswers(currentAnswers)
-            console.log(answers)
+            const currentAnswers = [...answers];
+            currentAnswers[index] = e.target.value;
+            setAnswers(currentAnswers);
+            console.log(answers);
           }}
         >
           <FormControlLabel
@@ -69,15 +69,28 @@ const PaperQuestions = () => {
       </li>
     );
   });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     history.push(`/student/${params.paper}/review`);
+    //get the right answers
+    const solutions = [];
+    questions.map((question) => {
+      solutions.push(question.answer);
+    });
+    //marking and update database
+    const marking = []
+    for (let i = 0; i< solutions.length; i++){
+      marking.push(solutions[i] === answers[i])
+    }
+    console.log(marking)
     //update the students papers table
-    const update = await axios.put(`http://127.0.0.1:8000/students/papers/submit/${user.username}/${params.paper}/`,
-    {
-      results: 0.83
-    })
-    //marking
+    const update = await axios.put(
+      `http://127.0.0.1:8000/students/papers/submit/${user.username}/${params.paper}/`,
+      {
+        results: 0.83,
+      }
+    );
   };
   return (
     <>
@@ -98,7 +111,12 @@ const PaperQuestions = () => {
         <ol>{printQuestions}</ol>
       </div>
       <Grid container justifyContent="center">
-        <Button variant="outlined" color="inherit" onClick={handleSubmit}>
+        <Button
+          variant="outlined"
+          color="inherit"
+          onClick={handleSubmit}
+          disabled={answers.length < questions.length}
+        >
           Submit
         </Button>
       </Grid>
