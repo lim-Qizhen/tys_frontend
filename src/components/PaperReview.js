@@ -2,13 +2,20 @@
 
 import React, { useState, useEffect } from "react";
 import StudentNavBar from "./StudentNavBar";
-import { Grid, Button, Accordion, AccordionSummary, Typography, AccordionDetails } from "@mui/material";
+import {
+  Grid,
+  Button,
+  Accordion,
+  AccordionSummary,
+  Typography,
+  AccordionDetails,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const PaperReview = () => {
   const params = useParams();
@@ -65,19 +72,22 @@ const PaperReview = () => {
         ) : (
           <CloseIcon style={{ color: "red" }} />
         )}
-        <br/>
+        <br />
         <Accordion sx={{ boxShadow: 0 }}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Solution</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <img src={question.solution}/>
-        </AccordionDetails>
-      </Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>Solution</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <img
+              src={question.solution}
+              style={{ width: "60%", marginBottom: "20px" }}
+            />
+          </AccordionDetails>
+        </Accordion>
       </li>
     );
   });
@@ -97,9 +107,18 @@ const PaperReview = () => {
         <p style={{ fontWeight: "normal" }}>Score: {resultDisplay}%</p>
       </div>
       <div className="questions">
-        <ol style={{ backgroundColor: "white", marginLeft:"20px", marginRight:"20px", padding:"50px" }}>{displayQuestions}</ol>
+        <ol
+          style={{
+            backgroundColor: "white",
+            marginLeft: "20px",
+            marginRight: "20px",
+            padding: "50px",
+          }}
+        >
+          {displayQuestions}
+        </ol>
       </div>
-      <Grid container justifyContent="center">
+      <Grid container justifyContent="center" sx={{ marginBottom: "20px" }}>
         <Button variant="outlined" color="inherit">
           Book Consultation
         </Button>

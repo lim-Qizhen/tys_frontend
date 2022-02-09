@@ -147,11 +147,19 @@ const PaperQuestions = () => {
       </div>
 
       <div className="questions">
-        <ol style={{ paddingTop: "0", backgroundColor: "white", marginLeft:"20px", marginRight:"20px", padding:"50px" }}>
+        <ol
+          style={{
+            paddingTop: "0",
+            backgroundColor: "white",
+            marginLeft: "20px",
+            marginRight: "20px",
+            padding: "50px",
+          }}
+        >
           {printQuestions}
         </ol>
       </div>
-      <Grid container justifyContent="center">
+      <Grid container justifyContent="center" sx={{ marginBottom: "20px" }}>
         <Button
           variant="outlined"
           color="inherit"
