@@ -14,10 +14,14 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { useSlider } from "@mui/base";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const StudentHome = () => {
   const user = useSelector((state) => state.user);
+  const history = useHistory();
+  if(user.accessToken === ""){
+    history.push("/")
+  }
   const [relevantPapers, setRelevantPapers] = useState([]);
   useEffect(() => {
     axios

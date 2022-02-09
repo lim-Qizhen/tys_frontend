@@ -8,10 +8,13 @@ import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../redux/UserReducer";
+// import ".env"
 
 const Home = () => {
+  // console.log(process.env.REACT_APP_SECRET)
   const dispatch = useDispatch();
   const history = useHistory();
+  const user = useSelector((state) => state.user);
   // const user = useSelector((state) => state.user);
 
   const [username, setUsername] = useState("");
@@ -30,15 +33,16 @@ const Home = () => {
         username: username,
         password: password,
       });
-      console.log(res.data);
+      console.log(res.data.token);
       dispatch(userActions.setAccessToken(res.data));
-      console.log(typeof username);
+      console.log(user.accessToken.token);
       //i'm assuming this only happens after the above lines
       const student = await axios.get(
-        `http://127.0.0.1:8000/students/profile/${username}/`
+        `http://127.0.0.1:8000/students/profile/${username}/`,
+        // { headers: { Authorization: `Bearer ${res.data.token}` } }
       );
       console.log(student.data);
-      dispatch(userActions.loginSuccess(student.data))
+      dispatch(userActions.loginSuccess(student.data));
       history.push("/student");
     } else if (username[0] === "t") {
       const res = await axios.post("http://127.0.0.1:8000/tutors/login/", {
@@ -100,7 +104,11 @@ const Home = () => {
                 />
               </Grid>
               <Grid container justifyContent="center" sx={{ margin: "20px" }}>
-                <Button variant="outlined" color="inherit" onClick={handleLogin}>
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  onClick={handleLogin}
+                >
                   Log In
                 </Button>
               </Grid>

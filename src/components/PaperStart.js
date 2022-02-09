@@ -5,20 +5,25 @@ import StudentNavBar from "./StudentNavBar";
 import { Button, Box } from "@mui/material";
 import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const PaperStart = () => {
+  const user = useSelector((state) => state.user);
+  console.log(user)
   const [paper, setPaper] = useState({});
   const params = useParams();
   const history = useHistory()
 
+  // const [complete,setComplete] = useState()
   // useEffect(() => {
-  //   const getPaper = async () => {
-  //     const res = await axios.get("http://127.0.0.1:8000/papers/all/");
-  //     console.log(res.data[0]);
-  //     setPaper(res.data[0]);
-  //   };
-  //   getPaper();
-  // }, []);
+  //   axios
+  //     .get(
+  //       `http://localhost:8000/students/paper/score/${user.username}/${params.paper}/`
+  //     )
+  //     .then((res) => {
+  //       setComplete(res.data[0].completed)
+  //     });
+  // });
 
   const handleStart = (e) => {
     e.preventDefault();

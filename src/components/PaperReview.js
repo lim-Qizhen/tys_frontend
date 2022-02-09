@@ -5,28 +5,32 @@ import StudentNavBar from "./StudentNavBar";
 import { Grid, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
 const PaperReview = () => {
   const params = useParams();
   const user = useSelector((state) => state.user);
+  const history = useHistory();
+  if (user.accessToken === "") {
+    history.push("/");
+  }
   console.log(params); //params.paper = paper_id
   //retrieve the score
-  const [result,setResult] = useState()
+  const [result, setResult] = useState();
   useEffect(() => {
     axios
       .get(
         `http://localhost:8000/students/paper/score/${user.username}/${params.paper}/`
       )
       .then((res) => {
-        console.log(res.data[0].results)
-        setResult(res.data[0].results)
+        console.log(res.data[0].results);
+        setResult(res.data[0].results);
       });
   });
-  const resultDisplay = (Math.round(result*10000)/100).toFixed(2)
-  console.log(resultDisplay)
+  const resultDisplay = (Math.round(result * 10000) / 100).toFixed(2);
+  console.log(resultDisplay);
   //retrieve the questions for review
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
@@ -69,13 +73,12 @@ const PaperReview = () => {
           display: "sticky",
         }}
       >
-        {params.paper.split("_")[0]} {params.paper.split("_")[1]} {params.paper.split("_")[2]}
+        {params.paper.split("_")[0]} {params.paper.split("_")[1]}{" "}
+        {params.paper.split("_")[2]}
         <p style={{ fontWeight: "normal" }}>Score: {resultDisplay}%</p>
       </div>
       <div className="questions">
-        <ol>
-          {displayQuestions}
-        </ol>
+        <ol>{displayQuestions}</ol>
       </div>
       <Grid container justifyContent="center">
         <Button variant="outlined" color="inherit">

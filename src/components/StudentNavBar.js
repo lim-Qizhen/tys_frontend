@@ -33,7 +33,7 @@ const StudentNavBar = () => {
             </Box>
             <Box sx={{ flexGrow: 0 }}>
               <Link
-                to="/student/consultations"
+                to="/student_consultations"
                 style={{ textDecoration: "none" }}
               >
                 <Button
@@ -43,17 +43,18 @@ const StudentNavBar = () => {
                   CONSULTS
                 </Button>
               </Link>
-              {/* <Link to="/student/profile" style={{ textDecoration: "none" }}></Link> */}
-              <Button
-                variant="contained"
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  marginLeft: "10px",
-                }}
-              >
-                {user.f_name}
-              </Button>
+              <Link to="/student_profile" style={{ textDecoration: "none" }}>
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: "white",
+                    color: "black",
+                    marginLeft: "10px",
+                  }}
+                >
+                  {user.f_name}
+                </Button>
+              </Link>
               <Button
                 variant="contained"
                 style={{
