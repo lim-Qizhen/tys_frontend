@@ -5,8 +5,23 @@ import StudentNavBar from "./StudentNavBar";
 import { Grid, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
+import { useParams } from "react-router-dom";
 
 const PaperReview = () => {
+  const params = useParams();
+  console.log(params); //params.paper = paper_id
+  //retrieve the questions for review
+  const [questions, setQuestions] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:8000/students/review_papers/${user.username}/${params.paper}`
+      )
+      .then((res) => {
+        setQuestions(res.data);
+      });
+  }, []);
+  console.log(questions);
   return (
     <>
       <StudentNavBar />
@@ -48,7 +63,9 @@ const PaperReview = () => {
         </ol>
       </div>
       <Grid container justifyContent="center">
-        <Button variant="outlined">Book Consultation</Button>
+        <Button variant="outlined" color="inherit">
+          Book Consultation
+        </Button>
       </Grid>
     </>
   );
