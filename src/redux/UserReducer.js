@@ -72,6 +72,7 @@ export const userSlice = createSlice({
       state.l_name = "";
       state.email = "";
       state.accessToken = "";
+      state.username= "";
       state.phone = "";
       state.school = "";
       state.subjects = "";

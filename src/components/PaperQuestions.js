@@ -15,8 +15,8 @@ const PaperQuestions = () => {
   const user = useSelector((state) => state.user);
   const params = useParams();
   const history = useHistory();
-  if(user.accessToken === ""){
-    history.push("/")
+  if (user.accessToken === "") {
+    history.push("/");
   }
   //get the paper questions ordered by question number
   const [questions, setQuestions] = useState([]);
@@ -32,10 +32,11 @@ const PaperQuestions = () => {
   const printQuestions = questions.map((question, index) => {
     return (
       <li style={{ marginBottom: "10px" }}>
+        <br />
         <img
           src={`${question.question_img}`}
           alt={`question ${index + 1}`}
-          style={{ width: "60%" }}
+          style={{ width: "60%", marginBottom: "20px" }}
         />
         <RadioGroup
           row
@@ -146,7 +147,9 @@ const PaperQuestions = () => {
       </div>
 
       <div className="questions">
-        <ol>{printQuestions}</ol>
+        <ol style={{ paddingTop: "0", backgroundColor: "white", marginLeft:"20px", marginRight:"20px", padding:"50px" }}>
+          {printQuestions}
+        </ol>
       </div>
       <Grid container justifyContent="center">
         <Button
