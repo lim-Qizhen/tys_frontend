@@ -110,7 +110,15 @@ const StudentHome = () => {
   return (
     <div>
       <StudentNavBar />
-      <p>Welcome, {user.f_name}</p>
+      <Box
+          sx={{
+            width: "100%",
+            maxWidth: 300,
+            margin: "20px",
+          }}
+        >
+          Welcome, {user.f_name}
+        </Box>
       <div
         className="all-papers"
         style={{

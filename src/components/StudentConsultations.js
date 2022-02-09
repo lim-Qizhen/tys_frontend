@@ -25,10 +25,10 @@ const StudentConsultations = () => {
           <li>
             27th August 11am
             <span style={{ float: "right" }}>
-              <Button variant="outlined" size="small">
+              <Button variant="outlined" size="small" color="inherit">
                 START
               </Button>{" "}
-              <Button variant="outlined" size="small">
+              <Button variant="outlined" size="small" color="inherit">
                 CANCEL
               </Button>
             </span>
@@ -54,7 +54,7 @@ const StudentConsultations = () => {
           <li>
             27th August 11am
             <span style={{ float: "right" }}>
-              <Button variant="outlined" size="small">
+              <Button variant="outlined" size="small" color="inherit">
                 REVIEW
               </Button>
             </span>
