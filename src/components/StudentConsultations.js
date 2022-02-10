@@ -6,6 +6,24 @@ import { useSelector } from "react-redux";
 const StudentConsultations = () => {
   const user = useSelector((state) => state.user)
   console.log(user.consultations)
+  const consult = user.consultations[0]
+  console.log(new Date(consult.date.split("-")[0], consult.date.split("-")[1], consult.date.split("-")[2]))
+
+  const upcomingConsultations = user.consultations.map((consult) => {
+    return(
+      <li>
+            {new Date(consult.date.split("-")[0], consult.date.split("-")[1], consult.date.split("-")[2]).toDateString()}, at {consult.time}
+            <span style={{ float: "right" }}>
+              <Button variant="outlined" size="small" color="inherit">
+                START
+              </Button>{" "}
+              <Button variant="outlined" size="small" color="inherit">
+                CANCEL
+              </Button>
+            </span>
+          </li>
+    )
+  })
   return (
     <>
       <StudentNavBar />
@@ -25,7 +43,7 @@ const StudentConsultations = () => {
           Upcoming Consultations
         </p>
         <ul>
-          <li>
+          {/* <li>
             27th August 11am
             <span style={{ float: "right" }}>
               <Button variant="outlined" size="small" color="inherit">
@@ -35,7 +53,8 @@ const StudentConsultations = () => {
                 CANCEL
               </Button>
             </span>
-          </li>
+          </li> */}
+          {upcomingConsultations}
         </ul>
       </Box>
       <Box

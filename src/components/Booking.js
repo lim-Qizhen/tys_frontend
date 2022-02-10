@@ -28,7 +28,7 @@ const Booking = () => {
     const current = [...user.consultations];
     current.push({
       date: consultFullDate,
-      time: time,
+      time: `${time.getHours()} : ${String(time.getMinutes()).padStart(2,"0")}`
     });
     dispatch(userActions.setConsultations(current));
     history.push("/student_consultations");

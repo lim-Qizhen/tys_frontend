@@ -28,9 +28,9 @@ const StudentRegister = () => {
     },
     {
       value: "Ahmad_Ibrahim_Secondary_School",
-      label: "Ahmad_Ibrahim_Secondary_School",
+      label: "Ahmad Ibrahim Secondary School",
     },
-    { value: "Anderson_Secondary_School", label: "Anglican High School" },
+    { value: "Anderson_Secondary_School", label: "Anderson Secondary School" },
     { value: "Anglican_High_School", label: "Anglican High School" },
     {
       value: "Anglo_Chinese_School_Barker_Road_",
