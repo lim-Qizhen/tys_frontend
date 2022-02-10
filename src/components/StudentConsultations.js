@@ -11,7 +11,7 @@ const StudentConsultations = () => {
 
   const upcomingConsultations = user.consultations.map((consult) => {
     return(
-      <li>
+      <li style={{marginBottom: "20px"}}>
             {new Date(consult.date.split("-")[0], consult.date.split("-")[1], consult.date.split("-")[2]).toDateString()}, at {consult.time}
             <span style={{ float: "right" }}>
               <Button variant="outlined" size="small" color="inherit">
@@ -43,17 +43,6 @@ const StudentConsultations = () => {
           Upcoming Consultations
         </p>
         <ul>
-          {/* <li>
-            27th August 11am
-            <span style={{ float: "right" }}>
-              <Button variant="outlined" size="small" color="inherit">
-                START
-              </Button>{" "}
-              <Button variant="outlined" size="small" color="inherit">
-                CANCEL
-              </Button>
-            </span>
-          </li> */}
           {upcomingConsultations}
         </ul>
       </Box>
@@ -73,7 +62,7 @@ const StudentConsultations = () => {
           Past Consultations
         </p>
         <ul style={{ color: "grey" }}>
-          <li>
+          <li style={{marginBottom: "20px"}}>
             27th January 2022 11am
             <span style={{ float: "right" }}>
               <Button variant="outlined" size="small" color="inherit">
