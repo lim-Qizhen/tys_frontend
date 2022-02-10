@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
         <Route exact path="/" component={Public} />
         <Route exact path="/student" component={StudentHome} />
-        <Route exact path="/student/register" component={StudentRegister} />
+        <Route exact path="/student_register" component={StudentRegister} />
         <Route exact path="/tutor" component={TutorConsultations} />
         <Route exact path="/tutor/register" component={TutorRegister} />
         <Route exact path="/student_profile" component={StudentProfile} />
@@ -36,7 +36,7 @@ function App() {
           path="/student_consultations"
           component={StudentConsultations}
         />
-        <Route exact path="/student/booking" component={Booking} />
+        <Route exact path="/student_booking" component={Booking} />
       </BrowserRouter>
     </div>
   );

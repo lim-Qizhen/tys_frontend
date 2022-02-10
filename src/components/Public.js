@@ -33,13 +33,13 @@ const Home = () => {
         username: username,
         password: password,
       });
-      console.log(res.data.token);
-      dispatch(userActions.setAccessToken(res.data));
-      console.log(user.accessToken.token);
+      console.log(res.data.access);
+      dispatch(userActions.setAccessToken(res.data.access));
+      console.log(user.accessToken);
       //i'm assuming this only happens after the above lines
       const student = await axios.get(
         `http://127.0.0.1:8000/students/profile/${username}/`,
-        // { headers: { Authorization: `Bearer ${res.data.token}` } }
+        { headers: { Authorization: `Bearer ${res.data.access}` } }
       );
       console.log(student.data);
       dispatch(userActions.loginSuccess(student.data));
@@ -117,7 +117,7 @@ const Home = () => {
         </form>
         Don't have an account with us yet?
         <br />
-        Register <Link to="/student/register">here for students</Link>, and{" "}
+        Register <Link to="/student_register">here for students</Link>, and{" "}
         <Link to="/tutor/register">here for tutors</Link>.
       </div>
     </>

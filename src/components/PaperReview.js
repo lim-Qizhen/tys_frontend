@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -119,9 +119,14 @@ const PaperReview = () => {
         </ol>
       </div>
       <Grid container justifyContent="center" sx={{ marginBottom: "20px" }}>
-        <Button variant="outlined" color="inherit">
-          Book Consultation
-        </Button>
+        <Link to="/student_booking" style={{ textDecoration: "none" }}>
+          <Button
+            variant="outlined"
+            style={{ color: "black", borderColor: "black" }}
+          >
+            Book Consultation
+          </Button>
+        </Link>
       </Grid>
     </>
   );

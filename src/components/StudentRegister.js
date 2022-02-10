@@ -31,6 +31,7 @@ const StudentRegister = () => {
     { value: "Science_(Biology)", label: "Science (Biology)" },
     { value: "Science_(Chemistry)", label: "Science (Chemistry)" },
     { value: "Science_(Physics)", label: "Science (Physics)" },
+    { value: "Science", label: "Science" },
   ];
   const examOptions = [
     { value: "Express", label: "Express" },
@@ -319,6 +320,7 @@ const StudentRegister = () => {
             variant="outlined"
             // disabled={disableButton}
             onClick={handleSubmit}
+            color="inherit"
           >
             Register
           </Button>

@@ -13,6 +13,7 @@ export const userSlice = createSlice({
     subjects: [],
     exams: [],
     paper: "",
+    consultations: [],
     is_tutor: false,
   },
   reducers: {
@@ -46,6 +47,9 @@ export const userSlice = createSlice({
     setTutor: (state, action) => {
       state.f_name = action.payload;
     },
+    setConsultations: (state, action) => {
+      state.consultations = action.payload;
+    },
     loginSuccess: (state, action) => {
       state.f_name = action.payload.first_name;
       state.l_name = action.payload.last_name;
@@ -72,7 +76,7 @@ export const userSlice = createSlice({
       state.l_name = "";
       state.email = "";
       state.accessToken = "";
-      state.username= "";
+      state.username = "";
       state.phone = "";
       state.school = "";
       state.subjects = "";

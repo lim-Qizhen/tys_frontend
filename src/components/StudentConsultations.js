@@ -1,8 +1,11 @@
 import { Box, Button } from "@mui/material";
 import React from "react";
 import StudentNavBar from "./StudentNavBar";
+import { useSelector } from "react-redux";
 
 const StudentConsultations = () => {
+  const user = useSelector((state) => state.user)
+  console.log(user.consultations)
   return (
     <>
       <StudentNavBar />
@@ -50,9 +53,9 @@ const StudentConsultations = () => {
         <p style={{ textDecoration: "underline", fontWeight: "bold" }}>
           Past Consultations
         </p>
-        <ul>
+        <ul style={{ color: "grey" }}>
           <li>
-            27th August 11am
+            27th January 2022 11am
             <span style={{ float: "right" }}>
               <Button variant="outlined" size="small" color="inherit">
                 REVIEW
