@@ -535,7 +535,7 @@ const StudentRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //create account
-    const res = await axios.post("https://127.0.0.1:8000/account/new/", {
+    const res = await axios.post("http://127.0.0.1:8000/account/new/", {
       first_name: user.f_name,
       last_name: user.l_name,
       username: `s_${user.username}`,
