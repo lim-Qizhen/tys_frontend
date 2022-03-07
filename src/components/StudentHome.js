@@ -19,9 +19,9 @@ import { Link, useHistory } from "react-router-dom";
 const StudentHome = () => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
-  if(user.accessToken === ""){
-    history.push("/")
-  }
+  // if(user.accessToken === ""){
+  //   history.push("/")
+  // }
   const [relevantPapers, setRelevantPapers] = useState([]);
   useEffect(() => {
     axios

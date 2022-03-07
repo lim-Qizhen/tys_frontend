@@ -29,7 +29,7 @@ const Home = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (username[0] === "s") {
-      const res = await axios.post("http://127.0.0.1:8000/students/login/", {
+      const res = await axios.post("http://127.0.0.1:8000/account/login/", {
         username: username,
         password: password,
       });

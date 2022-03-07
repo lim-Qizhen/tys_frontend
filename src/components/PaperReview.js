@@ -21,9 +21,9 @@ const PaperReview = () => {
   const params = useParams();
   const user = useSelector((state) => state.user);
   const history = useHistory();
-  if (user.accessToken === "") {
-    history.push("/");
-  }
+  // if (user.accessToken === "") {
+  //   history.push("/");
+  // }
   console.log(params); //params.paper = paper_id
   //retrieve the score
   const [result, setResult] = useState();

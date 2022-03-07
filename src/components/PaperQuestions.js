@@ -15,9 +15,9 @@ const PaperQuestions = () => {
   const user = useSelector((state) => state.user);
   const params = useParams();
   const history = useHistory();
-  if (user.accessToken === "") {
-    history.push("/");
-  }
+  // if (user.accessToken === "") {
+  //   history.push("/");
+  // }
   //get the paper questions ordered by question number
   const [questions, setQuestions] = useState([]);
   useEffect(() => {

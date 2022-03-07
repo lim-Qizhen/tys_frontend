@@ -528,7 +528,7 @@ const StudentRegister = () => {
       user.phone === "" ||
       user.email === "" ||
       user.school === "" ||
-      // user.subjects === [] ||
+      user.subjects === [] ||
       user.password === ""
     );
   };
@@ -551,7 +551,7 @@ const StudentRegister = () => {
     const papers = [];
     for (let i = 0; i < subjects.length; i++) {
       const paper = await axios.get(
-        `http://127.0.0.1:8000/students/papers/${subjects[i]}/${exams[i]}/`
+        `http://127.0.0.1:8000/account/students/papers/${subjects[i]}/${exams[i]}/`
       );
       for (const element of paper.data) {
         papers.push(element);
@@ -566,7 +566,7 @@ const StudentRegister = () => {
     //save exam papers into database
     for (const paper of studentPapers) {
       const savePapers = await axios.post(
-        "http://127.0.0.1:8000/students/papers/",
+        "http://127.0.0.1:8000/account/students/papers/save/",
         {
           username: `s_${user.username}`,
           paper_id: paper,
@@ -715,7 +715,7 @@ const StudentRegister = () => {
         <Grid container justifyContent="center" sx={{ marginTop: "20px" }}>
           <Button
             variant="outlined"
-            // disabled={disableButton}
+            disabled={disableButton}
             onClick={handleSubmit}
             color="inherit"
           >

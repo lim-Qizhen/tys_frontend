@@ -6,9 +6,9 @@ import { useHistory } from "react-router-dom";
 const StudentProfile = () => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
-  if (user.accessToken === "") {
-    history.push("/");
-  }
+  // if (user.accessToken === "") {
+  //   history.push("/");
+  // }
   //get user papers scores
   return (
     <>
