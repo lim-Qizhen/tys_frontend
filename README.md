@@ -24,14 +24,21 @@ The main page is a login page with links for a student and teacher registration.
 
 Upon a student login, the relevant exam papers will be sorted by subject and completion status.
 
+Students can attempt a question paper,
+
+and review it later.
+
 
 ### Codes and Struggles
 1. Planning the database and the necessary APIs for the student papers
-   a. Which tables to create and the type of data they should store (how minuscule)
-   b. When and where a record should be saved
-3. Preparing the clickable drop down list of all relevant question papers using what is given from the database
-   a. Since the number of subjects must be retrieved from the database, the required states used is dynamic
-   b. Having to sort out the incomplete and completed papers to be displayed on the student homepage
+    
+    a. Which tables to create and the type of data they should store (how minuscule)
+    
+    b. When and where a record should be saved
+
+2. Preparing the clickable drop down list of all relevant question papers using what is given from the database
+
+   a. Since the number of subjects, and which papers are completed, must be retrieved from the database, the required states used is dynamic
 
 ### Possible Extensions
 1. Adding a class table for students and teachers to be linked so that teachers can monitor their students' progress
