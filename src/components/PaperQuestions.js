@@ -21,10 +21,14 @@ const PaperQuestions = () => {
   //get the paper questions ordered by question number
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/papers/${params.paper}/`).then((res) => {
-      console.log(res.data);
-      setQuestions(res.data);
-    });
+    axios
+      .get(`http://127.0.0.1:8000/do_paper/${params.paper}/`, {
+        headers: { Authorization: `Bearer ${user.accessToken}` },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setQuestions(res.data);
+      });
   }, []);
 
   //print the questions and save the solutions
@@ -94,41 +98,46 @@ const PaperQuestions = () => {
       username,
       paper_id,
       question_number,
-      question_img,
-      answer,
+      // question_img,
+      // answer,
       student_answer,
-      accuracy,
-      solution
+      accuracy
+      // solution
     ) => {
-      await axios.post("http://localhost:8000/students/papers/review/", {
-        username: username,
-        paper_id: paper_id,
-        question_number: question_number,
-        question_img: question_img,
-        answer: answer,
-        student_answer: student_answer,
-        accuracy: accuracy,
-        solution: solution,
-      });
+      await axios.post(
+        "http://localhost:8000/account/students/submit_question/",
+        {
+          username: username,
+          paper_id: paper_id,
+          question_number: question_number,
+          // question_img: question_img,
+          // answer: answer,
+          student_answer: student_answer,
+          accuracy: accuracy,
+          // solution: solution,
+        },
+        { headers: { Authorization: `Bearer ${user.accessToken}` } }
+      );
     };
     questions.map((question, index) => {
       updateForReview(
         user.username,
         question.paper_id,
         question.question_number,
-        question.question_img,
-        question.answer,
+        // question.question_img,
+        // question.answer,
         answers[index],
-        marking[index],
-        question.solution
+        marking[index]
+        // question.solution
       );
     });
     //update the students papers table
     const update = await axios.put(
-      `http://127.0.0.1:8000/students/papers/submit/${user.username}/${params.paper}/`,
+      `http://127.0.0.1:8000/account/students/update_paper/${user.username}/${params.paper}/`,
       {
         results: accuracy,
-      }
+      },
+      { headers: { Authorization: `Bearer ${user.accessToken}` } }
     );
   };
   return (

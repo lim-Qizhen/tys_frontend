@@ -8,14 +8,11 @@ import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../redux/UserReducer";
-// import ".env"
 
 const Home = () => {
-  // console.log(process.env.REACT_APP_SECRET)
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.user);
-  // const user = useSelector((state) => state.user);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -36,13 +33,14 @@ const Home = () => {
       console.log(res.data.access);
       dispatch(userActions.setAccessToken(res.data.access));
       console.log(user.accessToken);
-      //i'm assuming this only happens after the above lines
+      // i'm assuming this only happens after the above lines
       const student = await axios.get(
-        `http://127.0.0.1:8000/students/profile/${username}/`,
+        `http://127.0.0.1:8000/account/profile/${username}/`,
         { headers: { Authorization: `Bearer ${res.data.access}` } }
       );
-      console.log(student.data);
-      dispatch(userActions.loginSuccess(student.data));
+      console.log(student.data[0]);
+      dispatch(userActions.loginSuccess(student.data[0]));
+      console.log(user);
       history.push("/student");
     } else if (username[0] === "t") {
       const res = await axios.post("http://127.0.0.1:8000/tutors/login/", {
@@ -55,7 +53,8 @@ const Home = () => {
         `http://127.0.0.1:8000/tutors/profile/${username}/`,
         {
           username: username,
-        }
+        },
+        { headers: { Authorization: `Bearer ${user.accessToken}` } }
       );
       console.log(tutor);
     }

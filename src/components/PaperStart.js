@@ -1,18 +1,16 @@
 //JUST RETRIEVE THE PAPER TITLE FROM THE PAPER_ID
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import StudentNavBar from "./StudentNavBar";
 import { Button, Box } from "@mui/material";
-import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const PaperStart = () => {
   const user = useSelector((state) => state.user);
-  console.log(user)
-  const [paper, setPaper] = useState({});
   const params = useParams();
   const history = useHistory()
+  console.log(params)
 
   // const [complete,setComplete] = useState()
   // useEffect(() => {

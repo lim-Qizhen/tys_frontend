@@ -11,26 +11,26 @@ import {
   Collapse,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
-import { useSlider } from "@mui/base";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 
 const StudentHome = () => {
   const user = useSelector((state) => state.user);
+  console.log(user);
   const history = useHistory();
-  // if(user.accessToken === ""){
-  //   history.push("/")
-  // }
   const [relevantPapers, setRelevantPapers] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/students/login_papers/${user.username}/`)
+      .get(
+        `http://127.0.0.1:8000/account/students/login_papers/${user.username}/`,
+        { headers: { Authorization: `Bearer ${user.accessToken}` } }
+      )
       .then((res) => {
         setRelevantPapers(res.data);
       });
   }, []);
-  console.log(relevantPapers);
+  // console.log(relevantPapers);
   const donePapers = {};
   const toDoPapers = {};
   for (const paper of relevantPapers) {
@@ -98,7 +98,9 @@ const StudentHome = () => {
           {donePapers[subject].map((element) => {
             return (
               <ListItemText sx={{ pl: 4 }}>
-                <Link to={`/student/${element}/review`}>{element.split("_")[2]}</Link>
+                <Link to={`/student/${element}/review`}>
+                  {element.split("_")[2]}
+                </Link>
               </ListItemText>
             );
           })}
@@ -111,14 +113,14 @@ const StudentHome = () => {
     <div>
       <StudentNavBar />
       <Box
-          sx={{
-            width: "100%",
-            maxWidth: 300,
-            margin: "20px",
-          }}
-        >
-          Welcome, {user.f_name}
-        </Box>
+        sx={{
+          width: "100%",
+          maxWidth: 300,
+          margin: "20px",
+        }}
+      >
+        Welcome, {user.f_name}
+      </Box>
       <div
         className="all-papers"
         style={{

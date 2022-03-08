@@ -520,18 +520,7 @@ const StudentRegister = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-  const disableButton = () => {
-    return (
-      user.f_name === "" ||
-      user.l_name === "" ||
-      user.username === "" ||
-      user.phone === "" ||
-      user.email === "" ||
-      user.school === "" ||
-      user.subjects === [] ||
-      user.password === ""
-    );
-  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     //create account
@@ -715,7 +704,16 @@ const StudentRegister = () => {
         <Grid container justifyContent="center" sx={{ marginTop: "20px" }}>
           <Button
             variant="outlined"
-            disabled={disableButton}
+            disabled={
+              user.f_name === "" ||
+              user.l_name === "" ||
+              user.username === "" ||
+              user.phone === "" ||
+              user.email === "" ||
+              user.school === "" ||
+              // user.subjects === [] ||
+              password === ""
+            }
             onClick={handleSubmit}
             color="inherit"
           >

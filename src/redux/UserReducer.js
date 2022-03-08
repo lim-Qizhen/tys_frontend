@@ -54,7 +54,6 @@ export const userSlice = createSlice({
       state.f_name = action.payload.first_name;
       state.l_name = action.payload.last_name;
       state.email = action.payload.email;
-      state.accessToken = action.payload.accessToken;
       state.phone = action.payload.contact;
       state.school = action.payload.school;
       state.subjects = action.payload.subject;
