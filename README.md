@@ -23,8 +23,11 @@ The main page is a login page with links for a student and teacher registration.
 <img src="https://user-images.githubusercontent.com/65413578/157150730-02b845d6-fc14-45eb-96ca-beee1500adde.png" width="400">
 
 Upon a student login, the relevant exam papers will be sorted by subject and completion status.
+<img src="https://user-images.githubusercontent.com/65413578/157245664-df7bb780-1ba5-4a0c-aa31-ce32349cffa0.png" width = "400">
 
 Students can attempt a question paper,
+
+<img src = "https://user-images.githubusercontent.com/65413578/157246043-5802db02-4006-4736-8a68-102b5d04c2d6.png" width = "400">
 
 and review it later.
 
