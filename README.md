@@ -35,4 +35,4 @@ Upon a student login, the relevant exam papers will be sorted by subject and com
 
 ### Possible Extensions
 1. Adding a class table for students and teachers to be linked so that teachers can monitor their students' progress
-2. Allowing students to edit their subjects and exam level for generated papers to be retrieved again
+2. Allowing students to edit their subjects and exam level for relevant papers to be retrieved again
