@@ -21,18 +21,18 @@ const PaperReview = () => {
   const params = useParams();
   const user = useSelector((state) => state.user);
   const history = useHistory();
-  // if (user.accessToken === "") {
-  //   history.push("/");
-  // }
+
   console.log(params); //params.paper = paper_id
   //retrieve the score
   const [result, setResult] = useState();
   useEffect(() => {
     axios
       .get(
-        `http://localhost:8000/students/paper/score/${user.username}/${params.paper}/`
+        `http://localhost:8000/students/paper/score/${user.username}/${params.paper}/`,
+        { headers: { Authorization: `Bearer ${user.accessToken}` } }
       )
       .then((res) => {
+        console.log(res.data);
         console.log(res.data[0].results);
         setResult(res.data[0].results);
       });
@@ -44,14 +44,16 @@ const PaperReview = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:8000/students/review_papers/${user.username}/${params.paper}/`
+        `http://localhost:8000/account/students/review_paper/${user.username}/${params.paper}/`,
+        { headers: { Authorization: `Bearer ${user.accessToken}` } }
       )
       .then((res) => {
+        console.log(res.data);
         setQuestions(res.data);
       });
   }, []);
-  console.log(questions[0]);
-  const displayQuestions = questions.map((question, index) => {
+  console.log(questions[1]);
+  const displayQuestions = questions[1].map((question, index) => {
     return (
       <li style={{ marginBottom: "10px" }}>
         <br />
@@ -63,11 +65,11 @@ const PaperReview = () => {
         <br />
         Your answer:{" "}
         <span style={{ textDecoration: "underline" }}>
-          {question.student_answer}
+          {questions[0][index].student_answer}
         </span>{" "}
         Correct answer:{" "}
         <span style={{ textDecoration: "underline" }}>{question.answer}</span>{" "}
-        {question.accuracy ? (
+        {questions[0][index].accuracy ? (
           <DoneIcon style={{ color: "green" }} />
         ) : (
           <CloseIcon style={{ color: "red" }} />
