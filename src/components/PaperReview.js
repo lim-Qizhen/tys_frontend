@@ -26,31 +26,31 @@ const PaperReview = () => {
   //retrieve the score
   const [result, setResult] = useState();
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8000/students/paper/score/${user.username}/${params.paper}/`,
-        { headers: { Authorization: `Bearer ${user.accessToken}` } }
-      )
-      .then((res) => {
-        console.log(res.data);
-        console.log(res.data[0].results);
-        setResult(res.data[0].results);
-      });
-  });
+  axios
+    .get(
+      `http://localhost:8000/account/students/paper_score/${user.username}/${params.paper}/`,
+      { headers: { Authorization: `Bearer ${user.accessToken}` } }
+    )
+    .then((res) => {
+      console.log(res.data);
+      console.log(res.data[0].results);
+      setResult(res.data[0].results);
+    });
+  }, []);
   const resultDisplay = (Math.round(result * 10000) / 100).toFixed(2);
   console.log(resultDisplay);
   //retrieve the questions for review
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8000/account/students/review_paper/${user.username}/${params.paper}/`,
-        { headers: { Authorization: `Bearer ${user.accessToken}` } }
-      )
-      .then((res) => {
-        console.log(res.data);
-        setQuestions(res.data);
-      });
+  axios
+    .get(
+      `http://localhost:8000/account/students/review_paper/${user.username}/${params.paper}/`,
+      { headers: { Authorization: `Bearer ${user.accessToken}` } }
+    )
+    .then((res) => {
+      console.log(res.data);
+      setQuestions(res.data);
+    });
   }, []);
   console.log(questions[1]);
   const displayQuestions = questions[1].map((question, index) => {
