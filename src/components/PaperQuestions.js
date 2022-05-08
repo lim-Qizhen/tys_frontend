@@ -79,7 +79,6 @@ const PaperQuestions = () => {
   console.log(questions);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    history.push(`/student/${params.paper}/review`);
     //get the right answers
     const solutions = [];
     questions.map((question) => {
@@ -139,6 +138,7 @@ const PaperQuestions = () => {
       },
       { headers: { Authorization: `Bearer ${user.accessToken}` } }
     );
+    history.push(`/student/${params.paper}/review`);
   };
   return (
     <>
